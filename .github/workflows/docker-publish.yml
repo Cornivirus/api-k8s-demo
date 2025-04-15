@@ -48,9 +48,7 @@ jobs:
         with:
           context: .
           push: true
-          tags:
-            - joshuamsaechao/api-k8s-demo:latest
-            - joshuamsaechao/api-k8s-demo:${{ github.sha }}  # Etiqueta única por commit
+          tags: edeljose/api-k8s-demo:latest,edeljose/api-k8s-demo:${{ github.sha }}
 
   deploy:
     name: Deploy to Minikube
