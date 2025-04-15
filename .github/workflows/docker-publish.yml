@@ -22,29 +22,28 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run lint checks (opcional)
-        run: npm run lint || true # Ignora errores si no usas linter
-
       - name: Run tests
         run: npm test
-  
-    lint: 
-      name: Lint code with ESLint 
-      runs-on: ubuntu-latest 
-      needs: test 
-      steps: 
-        - name: Checkout code 
-          uses: actions/checkout@v3 
 
-        - name: Install dependencies 
-          run: npm install 
- 
-        - name: Run ESLint 
-          run: npx eslint . --ext .js 
+  lint:
+    name: Lint code with ESLint
+    runs-on: ubuntu-latest
+    needs: test  # Solo se ejecuta si el job "test" tiene éxito
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npx eslint . --ext .js
+
   build-and-push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    needs: test  # Solo se ejecuta si el job "test" tiene éxito
+    needs: lint  # Solo se ejecuta si el job "lint" tiene éxito
 
     steps:
       - name: Checkout code
